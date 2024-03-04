@@ -26,7 +26,8 @@ class JwtRequestFilter(
     ) {
         val header = request.getHeader(HttpHeaders.AUTHORIZATION)
         if (header == null || !header.startsWith("Bearer ")) {
-            response.status = HttpStatus.UNAUTHORIZED.value()
+//            response.status = HttpStatus.UNAUTHORIZED.value()
+//            response.flushBuffer()
             chain.doFilter(request, response)
             return
         }
@@ -34,9 +35,11 @@ class JwtRequestFilter(
         val token = header.substring(startIndex = 7)
         val username = jwtTokenService.validateTokenAndGetUsername(token)
         if (username == null) {
+            val url = request.requestURL
             // validation failed or token expired
             response.status = HttpStatus.UNAUTHORIZED.value()
-            chain.doFilter(request, response)
+            response.flushBuffer()
+//            chain.doFilter(request, response)
             return
         }
 
@@ -48,9 +51,10 @@ class JwtRequestFilter(
             )
             authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
             SecurityContextHolder.getContext().authentication = authentication
-            chain.doFilter(request, response)
-        } catch (ex: UsernameNotFoundException) {
+        } catch (_: UsernameNotFoundException) {
 
+        } finally {
+            chain.doFilter(request, response)
         }
 
     }

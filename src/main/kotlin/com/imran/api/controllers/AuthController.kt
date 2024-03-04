@@ -32,7 +32,7 @@ class AuthController(
         return userRepo.save(user)
     }
 
-    @PostMapping("/login")
+    @PostMapping("/authenticate")
     fun login(@Valid @RequestBody loginDetails: LoginRequest)
             : ResponseEntity<HttpResponse> {
 
@@ -50,4 +50,23 @@ class AuthController(
             HttpStatus.OK
         )
     }
+
+//    @PostMapping("/authenticate")
+//    fun login(@Valid @RequestBody loginDetails: LoginRequest)
+//            : ResponseEntity<HttpResponse> {
+//
+//        val user: User = userRepo.findByUsername(loginDetails.username!!)
+//            ?: userRepo.findByEmail(loginDetails.username!!)
+//            ?: return ResponseEntity(HttpResponse(error = "Username not found"), HttpStatus.UNAUTHORIZED)
+//
+//        if (!passwordEncoder.matches(loginDetails.password, user.password)) {
+//            return ResponseEntity(HttpResponse(error = "Incorrect password"), HttpStatus.UNAUTHORIZED)
+//        }
+//
+//        val userDetails = jwtUserDetailsService.loadUserByUsername(user.username)
+//        return ResponseEntity(
+//            HttpResponse(data = LoginResponse(user.email, user.username, jwtTokenService.generateToken(userDetails))),
+//            HttpStatus.OK
+//        )
+//    }
 }
