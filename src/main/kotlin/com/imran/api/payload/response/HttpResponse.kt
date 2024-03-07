@@ -1,4 +1,4 @@
-package com.imran.api.models
+package com.imran.api.payload.response
 
 class HttpResponse(
     val data: Any? = null,

@@ -1,7 +1,6 @@
-package com.imran.api.models
+package com.imran.api.payload.request
 
 import jakarta.validation.constraints.NotBlank
-import lombok.AllArgsConstructor
 import lombok.EqualsAndHashCode
 import lombok.NoArgsConstructor
 import lombok.ToString
