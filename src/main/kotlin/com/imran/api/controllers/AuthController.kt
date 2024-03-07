@@ -46,7 +46,13 @@ class AuthController(
 
         val userDetails = jwtUserDetailsService.loadUserByUsername(user.username)
         return ResponseEntity(
-            HttpResponse(data = LoginResponse(user.email, user.username, jwtTokenService.generateToken(userDetails))),
+            HttpResponse(
+                data = LoginResponse(
+                    user.email,
+                    user.username,
+                    jwtTokenService.generateToken(userDetails)
+                )
+            ),
             HttpStatus.OK
         )
     }

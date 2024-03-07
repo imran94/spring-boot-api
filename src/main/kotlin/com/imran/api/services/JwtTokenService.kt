@@ -23,7 +23,6 @@ class JwtTokenService {
             .withIssuer("app")
             .withIssuedAt(now)
             .withExpiresAt(now.plusMillis(JWT_TOKEN_VALIDITY.toMillis()))
-            .
             .sign(hmac512)
     }
 
