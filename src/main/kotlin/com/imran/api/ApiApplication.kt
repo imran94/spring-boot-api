@@ -17,19 +17,19 @@ fun main(args: Array<String>) {
 	runApplication<ApiApplication>(*args)
 }
 
-@Bean
-@Throws(Exception::class)
-fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-	return http
-		.authorizeHttpRequests { customizer ->
-			customizer
-				.requestMatchers("/api/login").permitAll()
-				.requestMatchers("/api/**").authenticated()
-				.anyRequest().denyAll()
-		}
-		.exceptionHandling { customizer: ExceptionHandlingConfigurer<HttpSecurity?> ->
-			customizer
-				.authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-		}
-		.build()
-}
+//@Bean
+//@Throws(Exception::class)
+//fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+//	return http
+//		.authorizeHttpRequests { customizer ->
+//			customizer
+//				.requestMatchers("/api/login").permitAll()
+//				.requestMatchers("/api/**").authenticated()
+//				.anyRequest().denyAll()
+//		}
+//		.exceptionHandling { customizer: ExceptionHandlingConfigurer<HttpSecurity?> ->
+//			customizer
+//				.authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+//		}
+//		.build()
+//}

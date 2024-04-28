@@ -1,0 +1,10 @@
+spring.datasource.url=jdbc:mariadb://{ip}:{port}/{dbname}
+spring.datasource.username=
+spring.datasource.password=
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.globally_quoted_identifiers=true
+spring.jpa.properties.hibernate.globally_quoted_identifiers_skip_column_definitions=true
+
+app.jwtSecret=b313a21908df55c9e322e3c65a4b0b7561ab1594ca806b3affbc0d769a1290c1922aa6622587bea3c0c4d871470a6d06f54dbd20dbda84250e2741eb01f08e33
+server.error.include-message=always
