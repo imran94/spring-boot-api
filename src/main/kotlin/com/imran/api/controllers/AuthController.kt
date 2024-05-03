@@ -1,6 +1,7 @@
 package com.imran.api.controllers
 
 import com.imran.api.mail.EmailService
+import com.imran.api.models.Role
 import com.imran.api.models.User
 import com.imran.api.models.UserToken
 import com.imran.api.payload.request.LoginRequest
@@ -43,9 +44,24 @@ class AuthController(
     @PostMapping("/register")
     fun register(
         @Valid @RequestBody request: RegistrationRequest
-    ): User {
-        val user = User(request)
-        user.password = passwordEncoder.encode(user.password)
+    ): ResponseEntity<Any>{
+
+        if ((request.role == Role.CUSTOMER && request.customer == null)
+            || (request.role == Role.EMPLOYEE && request.employee == null)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponse("Data for the selected role cannot be null"))
+        }
+
+        val user = User(
+            email = request.email,
+            username = request.username,
+            password = passwordEncoder.encode(request.password),
+            role = request.role
+//            ,
+//            customer = request.customer,
+//            employee = request.employee
+        )
+
         userRepo.save(user)
         emailService.sendEmail(
             user.email,
@@ -53,7 +69,7 @@ class AuthController(
             "Thank you for signing up for the app, ${user.username}"
         )
 
-        return user
+        return ResponseEntity.ok(user)
 //        return ResponseEntity.status(HttpStatus.CREATED)
 //            .body(
 //                RegisterResponse(

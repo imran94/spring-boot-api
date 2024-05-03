@@ -1,6 +1,7 @@
 package com.imran.api.models
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
@@ -10,22 +11,21 @@ import java.util.*
 
 @Entity
 data class Employee(
-    @Column(nullable = false)
-    @NotBlank var name: String?,
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    @NotBlank
-    var titleOfCourtesy: ETitle?,
-    @Column(nullable = false) @NotBlank var birthDate: Date?,
-    @Column(nullable = false) @NotBlank var hireDate: Date?,
+    var firstName: String?,
+    var lastName: String?,
+    @Enumerated(EnumType.STRING) var titleOfCourtesy: ETitle?,
+    @Column(nullable = false) var birthDate: Date?,
+    @Column(nullable = false) var hireDate: Date?,
+    var photoPath: String? = null,
 
     @JsonManagedReference
     @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "address_id")
-    var address: Address?,
+    var address: Address,
 
-    var photoPath: String? = null,
+//    @JsonBackReference
+//    @OneToOne(mappedBy = "employee")
+//    var user: User,
 
     @JsonBackReference
     @ManyToOne(cascade = [CascadeType.ALL])
@@ -33,8 +33,12 @@ data class Employee(
     var manager: Employee? = null,
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "manager")
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "manager")
     var subordinates: MutableList<Employee> = mutableListOf(),
+
+    @JsonManagedReference
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "supportRep")
+    var customers: MutableList<Customer> = mutableListOf(),
 
     @CreationTimestamp var createdAt: Date? = null,
     @UpdateTimestamp var updatedAt: Date? = null,

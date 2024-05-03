@@ -1,6 +1,7 @@
 package com.imran.api.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.imran.api.payload.request.RegistrationRequest
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
@@ -17,19 +18,22 @@ data class User (
     @JsonIgnore var password: String,
     @Enumerated(EnumType.STRING) var role: Role,
 
+//    @JsonManagedReference
+//    @OneToOne(cascade = [CascadeType.ALL])
+//    @JoinColumn(name = "customer_id")
+//    var customer: Customer? = null,
+//
+//    @JsonManagedReference
+//    @OneToOne(cascade = [CascadeType.ALL])
+//    @JoinColumn(name = "employee_id")
+//    var employee: Employee? = null,
+
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")
     var tokens: MutableList<UserToken> = mutableListOf(),
 
     @CreationTimestamp var createdAt: Date? = null,
     @UpdateTimestamp var updatedAt: Date? = null,
     @Id @GeneratedValue var id: Long? = null
-) {
-    constructor(request: RegistrationRequest): this(
-        request.email,
-        request.username,
-        request.password,
-        request.role
-    )
-}
+)
 
