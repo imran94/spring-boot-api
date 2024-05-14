@@ -41,6 +41,6 @@ class JwtTokenService(
     }
 
     companion object {
-        private val JWT_TOKEN_VALIDITY = Duration.ofMinutes(2)
+        private val JWT_TOKEN_VALIDITY = Duration.ofHours(2)
     }
 }

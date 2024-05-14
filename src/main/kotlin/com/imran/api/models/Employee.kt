@@ -10,12 +10,12 @@ import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
 
 @Entity
-data class Employee(
+class Employee(
     var firstName: String?,
     var lastName: String?,
-    @Enumerated(EnumType.STRING) var titleOfCourtesy: ETitle?,
-    @Column(nullable = false) var birthDate: Date?,
-    @Column(nullable = false) var hireDate: Date?,
+    var title: String?,
+    var birthDate: Date?,
+    var hireDate: Date?,
     var photoPath: String? = null,
 
     @JsonManagedReference
@@ -23,9 +23,9 @@ data class Employee(
     @JoinColumn(name = "address_id")
     var address: Address,
 
-//    @JsonBackReference
-//    @OneToOne(mappedBy = "employee")
-//    var user: User,
+    @JsonBackReference
+    @OneToOne(mappedBy = "employee")
+    var user: User,
 
     @JsonBackReference
     @ManyToOne(cascade = [CascadeType.ALL])

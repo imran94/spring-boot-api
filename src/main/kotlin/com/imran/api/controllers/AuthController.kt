@@ -120,7 +120,7 @@ class AuthController(
 
         val userDetails = jwtUserDetailsService.loadUserByUsername(userToken.user.username)
         userToken.accessToken = jwtTokenService.generateToken(userDetails)
-        userToken.expiresAt = LocalDateTime.now().plusMinutes(2)
+        userToken.expiresAt = LocalDateTime.now().plusHours(2)
         userTokenRepo.save(userToken)
         return ResponseEntity.ok(
             LoginResponse(

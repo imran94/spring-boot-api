@@ -12,21 +12,21 @@ import org.springframework.data.annotation.LastModifiedDate
 import java.util.*
 
 @Entity
-data class User (
+class User (
     @Column(unique = true) var email: String,
     @Column(unique = true) var username: String,
     @JsonIgnore var password: String,
     @Enumerated(EnumType.STRING) var role: Role,
 
-//    @JsonManagedReference
-//    @OneToOne(cascade = [CascadeType.ALL])
-//    @JoinColumn(name = "customer_id")
-//    var customer: Customer? = null,
-//
-//    @JsonManagedReference
-//    @OneToOne(cascade = [CascadeType.ALL])
-//    @JoinColumn(name = "employee_id")
-//    var employee: Employee? = null,
+    @JsonManagedReference
+    @OneToOne(cascade = [CascadeType.ALL])
+    @JoinColumn(name = "customer_id")
+    var customer: Customer? = null,
+
+    @JsonManagedReference
+    @OneToOne(cascade = [CascadeType.ALL])
+    @JoinColumn(name = "employee_id")
+    var employee: Employee? = null,
 
     @JsonIgnore
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")

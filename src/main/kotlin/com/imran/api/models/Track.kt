@@ -34,18 +34,7 @@ data class Track(
     @JoinColumn(name = "genre_id")
     var genre: Genre,
 
-    @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "playlist_track",
-        joinColumns = [JoinColumn(
-            name = "playlist_id",
-            referencedColumnName = "id"
-        )],
-        inverseJoinColumns = [JoinColumn(
-            name = "track_id",
-            referencedColumnName = "id"
-        )]
-    )
+    @ManyToMany(mappedBy = "tracks")
 //    @JsonIgnoreProperties("tracks")
     var playlists: MutableList<Playlist> = mutableListOf()
 )

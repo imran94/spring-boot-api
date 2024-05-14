@@ -9,7 +9,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.OneToOne
 
 @Entity
-data class Address(
+class Address(
     var street: String,
     var city: String,
     var region: String,
